@@ -106,6 +106,7 @@ final class Auth0Bundle extends AbstractBundle implements BundleInterface
         $audiences = $sdkConfig['audiences'] ?? [];
         $organizations = $sdkConfig['organizations'] ?? [];
         $scopes = $sdkConfig['scopes'] ?? [];
+        $connections = $sdkConfig['connections'] ?? [];
 
         if ([] === $audiences) {
             $audiences = null;
@@ -117,6 +118,10 @@ final class Auth0Bundle extends AbstractBundle implements BundleInterface
 
         if ([] === $scopes) {
             $scopes = null;
+        }
+
+        if ([] === $connections) {
+            $connections = null;
         }
 
         $container->services()
@@ -165,7 +170,8 @@ final class Auth0Bundle extends AbstractBundle implements BundleInterface
             ->arg('$managementTokenCache', $managementTokenCache)
             ->arg('$eventListenerProvider', $eventListenerProvider)
             ->arg('$backchannelLogoutCache', $backchannelLogoutCache)
-            ->arg('$backchannelLogoutExpires', $sdkConfig['backchannel_logout_expires']);
+            ->arg('$backchannelLogoutExpires', $sdkConfig['backchannel_logout_expires'])
+            ->arg('$connections', $connections);
 
         $container->services()
             ->set('auth0', Service::class)
